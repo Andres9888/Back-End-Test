@@ -38,9 +38,13 @@ All items ordered (and more) can be referenced in lib/orders.js
 
 ### Dev Notes / Response
 
+Currently it seems like the total function is working properly
 
 ---
 
+I checked a few times to make sure I was adding the order prices correctly. The total I had was 63.91 which is different 74.23 you wanted to get and 51.28 you would have got if there was a bug.
+
+We might to review this to make sure the items listed are correct or maybe I am making a mistake somewhere.
 
 ## Updating An Order
 ### QA Notes

@@ -9,8 +9,14 @@ For query params you will want to assume `filterProperty` is "name" and `filterV
 
 ### Dev Notes / Response
 
-
+In the interest of time I only fixed the exact issue for the "name" filter.
 ---
+
+The filter would have to be worked out for the other filters.
+
+I tried initially but was getting an issue when using variables in the query params in my filter function
+
+I would also have to work on it more for if you wanted to filter properties other than items for example filtering by price
 
 
 ## Placing An Order

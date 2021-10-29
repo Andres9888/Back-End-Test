@@ -1,90 +1,93 @@
-const Router = require('koa-router');
-const uuid = require('uuid').v4;
+const Router = require("koa-router")
+const uuid = require("uuid").v4
 
-const ordersRouter = new Router({ prefix: '/orders' });
-const ordersData = require('../lib/orders');
+const ordersRouter = new Router({ prefix: "/orders" })
+const ordersData = require("../data/ordersData")
 
-ordersRouter.post('/', async ctx => {
-    const { customerName, items } = ctx.request.body;
+ordersRouter.post("/", async (ctx) => {
+  const { customerName, items } = ctx.request.body
 
-    if (!items.length) {
-        ctx.throw(409, 'No items ordered')
-    }
-    
-    const total = items.reduce((orderTotal, item) => orderTotal += item.price, 0)
-    const order = {
-        id: uuid(),
-        customerName,
-        createdOn: new Date(),
-        items,
-        total
-    }
+  if (!items.length) {
+    ctx.throw(409, "No items ordered")
+  }
 
-    ctx.status = 201;
-    ctx.body = [ ...ordersData, order ];
-});
+  const total = items.reduce(
+    (orderTotal, item) => (orderTotal += item.price),
+    0
+  )
+  const order = {
+    id: uuid(),
+    customerName,
+    createdOn: new Date(),
+    items,
+    total,
+  }
 
-ordersRouter.get('/', async ctx => {
-    const { filterProperty, filterValue } = ctx.query;
+  ctx.status = 201
+  ctx.body = [...ordersData, order]
+})
 
-    let results = ordersData;
+ordersRouter.get("/", async (ctx) => {
+  const { filterProperty, filterValue } = ctx.query
 
-    if (filterProperty && filterValue) {
-        const filteredResults = ordersData.filter(({ items }) => 
-            items.filter(item => item[filterProperty].includes(filterValue))
-        )
-        results = filteredResults;
-    }
+  let results = ordersData
 
-    ctx.status = 200;
-    ctx.body = results;
-});
+  if (filterProperty && filterValue) {
+    const filteredResults = ordersData.filter(({ items }) =>
+      items.some(({ name }) => name.includes(filterValue))
+    )
+    results = filteredResults
+  }
 
-ordersRouter.get('/:id', async ctx => {
-    const { id } = ctx.params;
-    const order = ordersData.find(order => order.id === id)
+  ctx.status = 200
+  ctx.body = results
+})
 
-    if (!order) {
-        ctx.throw(404, 'Order not found')
-    }
+ordersRouter.get("/:id", async (ctx) => {
+  const { id } = ctx.params
+  const order = ordersData.find((order) => order.id === id)
 
-    ctx.status = 200;
-    ctx.body = order;
-});
+  if (!order) {
+    ctx.throw(404, "Order not found")
+  }
 
-ordersRouter.put('/:id', async ctx => {
-    const { id } = ctx.params;
-    const { customerName, items } = ctx.request.body;
+  ctx.status = 200
+  ctx.body = order
+})
 
-    const order = ordersData.find(order => order.id === id);
+ordersRouter.put("/:id", async (ctx) => {
+  const { id } = ctx.params
+  const { customerName, items } = ctx.request.body
 
-    if(!order) {
-        ctx.throw(404, 'Could not find order');
-    }
+  const order = ordersData.find((order) => order.id === id)
 
-    const updated = {
-        ...order,
-        customerName,
-        items
-    }
+  if (!order) {
+    ctx.throw(404, "Could not find order")
+  }
 
-    ctx.status = 200;
-    ctx.body = updated;
-});
+  const updated = {
+    ...order,
+    customerName,
+    items,
+  }
 
-ordersRouter.delete('/:id', async ctx => {
-    const { id } = ctx.params;
+  ctx.status = 200
+  ctx.body = updated
+})
 
-    const order = ordersData.find(order => order.id === id);
+ordersRouter.delete("/:id", async (ctx) => {
+  const { id } = ctx.params
 
-    if(!order) {
-        ctx.throw(404, 'Could not find order');
-    }
+  const order = ordersData.find((order) => order.id === id)
 
-    const remaining = ordersData.filter(({ id }) => id !== latest.id);
+  if (!order) {
+    ctx.throw(404, "Could not find order")
+  }
 
-    ctx.status = 200;
-    ctx.body = remaining;
-});
+  const remaining = ordersData.filter(({ id }) => id !== latest.id)
 
-module.exports = ordersRouter;
+  ctx.status = 200
+  ctx.body = remaining
+})
+
+module.exports = ordersRouter

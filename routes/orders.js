@@ -59,16 +59,22 @@ ordersRouter.put("/:id", async (ctx) => {
   const { id } = ctx.params
   const { customerName, items } = ctx.request.body
 
-  const order = ordersData.find((order) => order.id === id)
+  let order = ordersData.find((order) => order.id === id)
 
   if (!order) {
     ctx.throw(404, "Could not find order")
   }
 
+  if (!items) {
+    ctx.throw(409, "No items ordered")
+  } else {
+    order["items"] = items
+  }
+  console.log(order)
   const updated = {
     ...order,
-    customerName,
-    items,
+    //customerName,
+    //items,
   }
 
   ctx.status = 200

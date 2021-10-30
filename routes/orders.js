@@ -69,7 +69,12 @@ ordersRouter.put("/:id", async (ctx) => {
     ctx.throw(409, "No items ordered")
   } else {
     order["items"] = items
+    order["price"] = items.reduce(
+      (orderTotal, item) => (orderTotal += item.price),
+      0
+    )
   }
+
   console.log(order)
   const updated = {
     ...order,

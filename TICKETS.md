@@ -13,7 +13,7 @@ Should work for filter by name or other properties like customerName for example
 
 ---
 
-
+I was going to add validation for all the routes but in the interest of time I did not but would have in a real world environment.
 
 
 ## Placing An Order
@@ -39,9 +39,10 @@ Currently it seems like the total function is working properly
 
 ---
 
-I checked a few times to make sure I was adding the order prices correctly. The total I had was 63.91 which is different 74.23 you wanted to get and 51.28 you would have got if there was a bug.
+I checked a few times to make sure I was adding the order prices correctly. The total I had was 63.91 which is different from the 74.23 you wanted to get and 51.28 you would have got if there was a bug.
 
-We might to review this to make sure the items listed are correct or maybe I am making a mistake somewhere.
+ 
+We might have to review this to make sure the items listed are correct. More than likely you want a similar item and got it missed up. For example Cheeseburger with Cheese Pizza or something like this. 
 
 ## Updating An Order
 ### QA Notes

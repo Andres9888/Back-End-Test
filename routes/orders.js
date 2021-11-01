@@ -2,7 +2,7 @@ const Router = require("koa-router")
 const uuid = require("uuid").v4
 
 const ordersRouter = new Router({ prefix: "/orders" })
-const ordersData = require("../data/ordersData")
+const ordersData = require("../lib/ordersData")
 
 ordersRouter.get("/", async (ctx) => {
   const { filterProperty, filterValue } = ctx.query
@@ -116,6 +116,7 @@ ordersRouter.delete("/:id", async (ctx) => {
     if (!order) {
       ctx.throw(404, "Could not find order")
     }
+    ordersData.splice(ordersData.indexOf(order), 1)
 
     ctx.status = 200
     ctx.body = ordersData
